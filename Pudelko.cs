@@ -1,10 +1,11 @@
 ﻿
 using Microsoft.Graph;
+using System.Collections;
 using System.Globalization;
 
 namespace Projekt_Pudelko
 {
-    public sealed class Pudelko : IFormattable, IEquatable<Pudelko>
+    public sealed class Pudelko : IFormattable, IEquatable<Pudelko>, IEnumerable<double>
     {
         private readonly double a;
         private readonly double b;
@@ -282,6 +283,18 @@ namespace Projekt_Pudelko
             }
 
             return hash;
+        }
+        IEnumerator<double> IEnumerable<double>.GetEnumerator()
+        {
+            foreach (var x in this) 
+            {
+                yield return (double)x;  // sus
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
