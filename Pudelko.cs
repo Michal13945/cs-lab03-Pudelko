@@ -1,5 +1,4 @@
 ﻿
-using Microsoft.Graph;
 using System.Collections;
 using System.Globalization;
 
@@ -15,16 +14,16 @@ namespace Projekt_Pudelko
 
         public double A
         {
-            get { return Math.Round(a, 3); }
+            get { return Math.Round(GetNumberInUnit(a,"m"), 3); }
         }
 
         public double B
         {
-            get { return Math.Round(b, 3); }
+            get { return Math.Round(GetNumberInUnit(b,"m"), 3); }
         }
         public double C
         {
-            get { return Math.Round(c, 3); }
+            get { return Math.Round(GetNumberInUnit(c,"m"), 3); }
         }
         public double Objetosc
         {
@@ -43,7 +42,7 @@ namespace Projekt_Pudelko
             unitOfMeasure = UnitOfMeasure.centimeter;
         }
 
-        public Pudelko(double a = 10, double b = 10, double c = 10, UnitOfMeasure unitOfMeasure = UnitOfMeasure.meter)
+        public Pudelko(double a = 10, double b = 10, double c = 10, UnitOfMeasure unit = UnitOfMeasure.meter)
         {
             if (a <= 0 || b <= 0 || c <= 0)
             {
@@ -58,7 +57,7 @@ namespace Projekt_Pudelko
             this.a = a;
             this.b = b;
             this.c = c;
-            this.unitOfMeasure = unitOfMeasure;
+            this.unitOfMeasure = unit;
 
         }
 
@@ -220,8 +219,6 @@ namespace Projekt_Pudelko
             double c = ParseSide(parts[0]);
 
             return new Pudelko(a, b, c);
-
-
         }
 
         private static double ParseSide(string side)
