@@ -207,6 +207,45 @@ namespace Projekt_Pudelko
             }
         }
 
+        public static Pudelko Parse(string text)
+        {
+            if(string.IsNullOrEmpty(text) == true)
+            {
+                throw new ArgumentNullException("text");
+            }
+
+            string[] parts = text.Split('\u00d7');
+            double a = ParseSide(parts[0]);
+            double b = ParseSide(parts[1]);
+            double c = ParseSide(parts[0]);
+
+            return new Pudelko(a, b, c);
+
+
+        }
+
+        private static double ParseSide(string side)
+        {
+            double result = 0;
+
+            side = side.Trim();
+
+            if (side.EndsWith("m"))
+            {
+                result = double.Parse(side.Substring(0, side.Length - 1));
+            }
+            else if (side.EndsWith("cm"))
+            {
+                result = double.Parse(side.Substring(0, side.Length - 2)) / 100.0;
+            }
+            else if (side.EndsWith("mm"))
+            {
+                result = double.Parse(side.Substring(0, side.Length - 2)) / 1000.0;
+            }
+
+            return result;
+        }
+
         public string ToString(string? format, IFormatProvider? formatProvider)
         {
             if(format == null)
