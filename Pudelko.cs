@@ -33,6 +33,12 @@ namespace Projekt_Pudelko
         {
             get { return Math.Round(2 * GetNumberInUnit(a, "m") * GetNumberInUnit(b, "m") + 2 * GetNumberInUnit(a, "m") * GetNumberInUnit(c, "m") + 2 * GetNumberInUnit(b, "m") * GetNumberInUnit(c, "m"), 6); }
         }
+
+        public UnitOfMeasure UnitOfMeasure
+        {
+            get { return unitOfMeasure; }
+        }
+
         public Pudelko()
         {
             a = 10;
@@ -42,23 +48,74 @@ namespace Projekt_Pudelko
             unitOfMeasure = UnitOfMeasure.centimeter;
         }
 
-        public Pudelko(double a = 10, double b = 10, double c = 10, UnitOfMeasure unit = UnitOfMeasure.meter)
+        public Pudelko(double? a = null, double? b = null, double? c = null, UnitOfMeasure unit = UnitOfMeasure.meter)
         {
-            if (a <= 0 || b <= 0 || c <= 0)
+            this.unitOfMeasure = UnitOfMeasure.centimeter;
+
+            if (a == null)
             {
-                throw new ArgumentOutOfRangeException();
+                this.a = 10;
+                if(unit == UnitOfMeasure.milimeter)
+                {
+                    this.a = GetNumberInUnit((double)this.a, "mm");
+                }
+                else if(unit == UnitOfMeasure.meter)
+                {
+                    this.a = GetNumberInUnit((double)this.a, "m");
+                }
             }
-            else if(a > 10 || b > 10 || c > 10 && unitOfMeasure == UnitOfMeasure.meter) // możliwy błąd 
+            else
             {
-                throw new ArgumentOutOfRangeException();
+                this.a = (double)a;
             }
 
+            if(b == null)
+            {
+                this.b = 10;
+               
+                if (unit == UnitOfMeasure.milimeter)
+                {
+                    this.b = GetNumberInUnit((double)this.b, "mm");
+                }
+                else if (unit == UnitOfMeasure.meter)
+                {
+                    this.b = GetNumberInUnit((double)this.b, "m");
+                }
+            }
+            else
+            {
+                this.b = (double)b;
+            }
 
-            this.a = a;
-            this.b = b;
-            this.c = c;
+            if (c == null)
+            {
+                this.c = 10;
+               
+                if (unit == UnitOfMeasure.milimeter)
+                {
+                    this.c = GetNumberInUnit((double)this.c, "mm");
+                }
+                else if (unit == UnitOfMeasure.meter)
+                {
+                    this.c = GetNumberInUnit((double)this.c, "m");
+                }
+            }
+            else
+            {
+                this.c = (double)c;
+            }
             this.unitOfMeasure = unit;
 
+
+
+            if (this.a <= 0 || this.b <= 0 || this.c <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else if((this.a > 10 || this.b > 10 || this.c > 10) && unit == UnitOfMeasure.meter) // możliwy błąd 
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         public static explicit operator double[] (Pudelko p)
